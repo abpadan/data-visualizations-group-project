@@ -1,16 +1,38 @@
 import urllib2
 
-def validate_clean(perp_age_group):
-    if perp_age_group != "1020" and perp_age_group != "224" and perp_age_group != "940":
-      return True
-    else:
-      return False
+def build_line_to_append(split):
+    line = ','.join([str(elem) for elem in split])
+    return line
 
 def validate_not_empty(perp_age_group, perp_sex, perp_race):
     if perp_age_group and perp_sex and perp_race and validate_clean(perp_age_group):
         return True
     else:
       return False
+
+def validate_clean(perp_age_group):
+    if perp_age_group != "1020" and perp_age_group != "224" and perp_age_group != "940":
+      return True
+    else:
+      return False
+
+def validate_perp_age_group_not_empty(perp_age_group):
+    if perp_age_group and perp_age_group != "1020" and perp_age_group != "224" and perp_age_group != "940":
+        return True
+    else:
+      return False
+
+def validate_perp_sex_not_empty(perp_sex):
+    if perp_sex:
+        return True
+    else:
+      return False      
+
+def validate_perp_race_not_empty(perp_race):
+    if perp_race:
+        return True
+    else:
+      return False      
 
 def get_year(occur_date):
   return "," + occur_date[-4:]
@@ -34,7 +56,23 @@ for line in data:
     perp_race = split[10]
     validate_flg = validate_not_empty(perp_age_group, perp_sex, perp_race)
 
-    if validate_not_empty(perp_age_group, perp_sex, perp_race):
+    if not validate_perp_age_group_not_empty(perp_age_group):
+      perp_age_group = "UNKNOWN"
+      split[8] = perp_age_group
+    
+    if not validate_perp_sex_not_empty(perp_sex):
+      perp_sex = "UNKNOWN"
+      split[9] = perp_sex
+
+    if not validate_perp_race_not_empty(perp_race):
+      perp_race = "UNKNOWN"
+      split[10] = perp_race
+
+    if validate_flg:
       cleaned_file.write(line_to_append(line, occur_date))
+    else:
+      # Build the logline
+      line = build_line_to_append(split)
+      cleaned_file.write(line)
   count += 1
 cleaned_file.close()
