@@ -73,6 +73,6 @@ for line in data:
     else:
       # Build the logline
       line = build_line_to_append(split)
-      cleaned_file.write(line)
+      cleaned_file.write(line_to_append(line, occur_date))
   count += 1
 cleaned_file.close()
