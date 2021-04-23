@@ -1,38 +1,22 @@
 import urllib2
 
 def build_line_to_append(split):
-    line = ','.join([str(elem) for elem in split])
-    return line
+    return ','.join([str(elem) for elem in split])
 
 def validate_not_empty(perp_age_group, perp_sex, perp_race):
-    if perp_age_group and perp_sex and perp_race and validate_clean(perp_age_group):
-        return True
-    else:
-      return False
+    return perp_age_group and perp_sex and perp_race and validate_clean(perp_age_group)
 
 def validate_clean(perp_age_group):
-    if perp_age_group != "1020" and perp_age_group != "224" and perp_age_group != "940":
-      return True
-    else:
-      return False
+    return perp_age_group != "1020" and perp_age_group != "224" and perp_age_group != "940"
 
 def validate_perp_age_group_not_empty(perp_age_group):
-    if perp_age_group and perp_age_group != "1020" and perp_age_group != "224" and perp_age_group != "940":
-        return True
-    else:
-      return False
+    return perp_age_group and perp_age_group != "1020" and perp_age_group != "224" and perp_age_group != "940"
 
 def validate_perp_sex_not_empty(perp_sex):
-    if perp_sex:
-        return True
-    else:
-      return False      
+    return perp_sex
 
 def validate_perp_race_not_empty(perp_race):
-    if perp_race:
-        return True
-    else:
-      return False      
+    return perp_race
 
 def get_year(occur_date):
   return "," + occur_date[-4:]
